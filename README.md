@@ -5,6 +5,8 @@ Creates and returns public and private keys. Using Flask and SQLAlchemy in the s
 * [104.236.90.72/skylock/api/public/keys](http://104.236.90.72/skylock/api/public/keys) displays all available public keys (GET).
 * [104.236.90.72/skylock/api/key](http://104.236.90.72/skylock/api/key) creates a new pair of public and private keys. It displays the public key (POST).
 
+*__init.py* contains the API calls and *models.py* contains the two clasess for the two tables in the database.
+
 # Security
 One of the ways to secure the APIs requests is by using **OAuth 2** and **SSL**. One of the advantages of OAuth 2 is its reduced complexity when compared to OAuth1.0a. Since it uses SSL, there is no signing procedure. If we were not using SSL, then refresh tokens are necessary over HTTP [1].
 

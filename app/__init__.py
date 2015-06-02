@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 from flask import make_response
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.httpauth import HTTPBasicAuth
 import os
 import hashlib
 import seccure
@@ -9,28 +8,15 @@ import seccure
 app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
-auth = HTTPBasicAuth()
-
-@auth.get_password
-def get_password(username):
-    if username == 'skylock':
-        return 'velolabs15'
-    return None
-
-@auth.error_handler
-def unauthorized():
-    return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
 # Returns all private keys
 @app.route('/skylock/api/private/keys', methods=['GET'])
-@auth.login_required
 def get_private_keys():
     keys = models.PrivateKey.query.all()
     return jsonify(Private_Keys=[i.serialize for i in keys])
 
 # Returns all public keys
 @app.route('/skylock/api/public/keys', methods=['GET'])
-@auth.login_required
 def get_public_keys():
     keys = models.PublicKey.query.all()
     return jsonify(Public_Keys=[i.serialize for i in keys])
@@ -38,7 +24,6 @@ def get_public_keys():
 # Generates a new public and private key
 # Displays the new public key
 @app.route('/skylock/api/key', methods=['POST'])
-@auth.login_required
 def create_key():
     # Get the latest id
     latestPKs = models.PrivateKey.query.all()
@@ -56,14 +41,14 @@ def create_key():
     publicKey = seccure.passphrase_to_pubkey(privKey)
     # Save private key
     pk = models.PrivateKey(
-        name = 'Skylock-' + str(priv_id),
+        name = 'SKYLOCK-' + str(priv_id),
         key = str(privKey))
     db.session.add(pk)
     db.session.commit()
     # Save public key
     pubk = models.PublicKey(
         id = priv_id,
-        name = 'Skylock-' + str(priv_id),
+        name = 'SKYLOCK-' + str(priv_id),
         key = str(publicKey)
     )
     db.session.add(pubk)

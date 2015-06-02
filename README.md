@@ -14,6 +14,8 @@ If SSL is not needed, then OAauth1.0a is the safest protocol since it never pass
 
 Another way is by using public and private keys. Following Amazon's protocol shows that a user making a request can sign and pass a request (including the public key) to the server. The server then signs the request using the same algorithm and allows the request if the signature matches [3].
 
+In order to secure the request for all entries, only the allowed users should be able to see the response. Each indiviual entrie should belong to a specific user, and so only the owner of the key or an admin should be able to see the response of an individual entrie.
+
 [1] http://stackoverflow.com/a/7562407/3641665
 
 [2] https://stormpath.com/blog/secure-your-rest-api-right-way/
